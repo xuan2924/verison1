@@ -1,0 +1,45 @@
+{
+  "pages": [
+    "pages/discover/discover",
+    "pages/index/index",
+    "pages/create/create",
+    "pages/room/room",
+    "pages/write/write",
+    "pages/profile/profile"
+  ],
+  "window": {
+    "backgroundTextStyle": "light",
+    "navigationBarBackgroundColor": "#6BA8CB",
+    "navigationBarTitleText": "故事叠叠乐",
+    "navigationBarTextStyle": "black"
+  },
+  "tabBar": {
+    "color": "#666666",
+    "selectedColor": "#FF6B95",
+    "backgroundColor": "#ffffff",
+    "borderStyle": "white",
+    "list": [
+      {
+        "pagePath": "pages/discover/discover",
+        "iconPath": "asserts/images/home.png", 
+        "selectedIconPath": "asserts/images/home-selected.png", 
+        "text": "首页"
+      },
+      {
+        "pagePath": "pages/index/index",
+        "iconPath": "asserts/images/category.png", 
+        "selectedIconPath": "asserts/images/category-selected.png", 
+        "text": "创作"
+      },
+      {
+        "pagePath": "pages/profile/profile",
+        "iconPath": "asserts/images/user.png", 
+        "selectedIconPath": "asserts/images/user-selected.png",
+        "text": "我的"
+      }
+    ]
+  },
+	"style": "v2",
+	"cloud": true,
+  "sitemapLocation": "sitemap.json"
+}

@@ -1,0 +1,297 @@
+/* pages/discover/discover.wxss */
+.container {
+  width: 100%;
+  padding: 0;
+  min-height: 100vh;
+  background: #f8f9fa;
+  box-sizing: border-box;
+}
+
+/* 搜索栏 */
+.search-section {
+  width: 100%;
+  padding: 20rpx 30rpx 15rpx; /* 调整边距，减少上下padding */
+  background: white;
+  box-sizing: border-box;
+  position: sticky; /* 可选：搜索栏固定在顶部 */
+  top: 0;
+  z-index: 100;
+}
+
+.search-bar {
+  display: flex;
+  align-items: center;
+  width: 100%; /* 确保100%宽度 */
+  background: #f8f9fa;
+  border-radius: 30rpx;
+  padding: 20rpx 30rpx;
+  box-sizing: border-box; /* 确保padding不影响宽度计算 */
+}
+
+.search-icon {
+  font-size: 28rpx;
+  color: #999;
+  margin-right: 20rpx;
+}
+
+/* 4. 搜索输入框撑满剩余空间 */
+.search-input {
+  flex: 1;
+  width: 100%; /* 添加这个 */
+  font-size: 28rpx;
+  color: #333;
+  background: transparent; /* 确保透明背景 */
+  border: none; /* 去掉默认边框 */
+  outline: none; /* 去掉聚焦轮廓 */
+}
+
+.search-placeholder {
+  color: #ccc;
+}
+
+.search-filter {
+  font-size: 24rpx;
+  color: #FF6B95;
+  padding: 8rpx 16rpx;
+  background: rgba(255, 107, 149, 0.1);
+  border-radius: 20rpx;
+}
+/* 轮播图容器 - 必须给高度，否则swiper会塌陷 */
+.banner-section {
+  width: 100%;
+}
+.banner-swiper {
+  width: 100%;
+  height: 300rpx; /* 关键：给轮播图设置高度，否则图片不显示 */
+}
+/* 轮播项 */
+.banner-item {
+  width: 100%;
+  height: 100%;
+  position: relative; /* 让文字叠加在图片上 */
+}
+/* 轮播图图片 - 关键样式 */
+.banner-image {
+  width: 100%;
+  height: 100%;
+  display: block; /* 去掉图片默认的空隙 */
+  object-fit: cover; /* 保持图片比例，填满容器 */
+}
+/* 文字叠加层（可选） */
+.banner-content {
+  position: absolute;
+  bottom: 20rpx;
+  left: 20rpx;
+  color: white;
+  text-shadow: 0 2rpx 4rpx rgba(0,0,0,0.5);
+}
+.banner-title {
+  font-size: 32rpx;
+  font-weight: bold;
+  display: block; /* 换行 */
+  margin-bottom: 8rpx;
+}
+.banner-desc {
+  font-size: 24rpx;
+  display: block;
+}
+
+
+/* 分类区域 */
+.category-section {
+  padding: 40rpx 10rpx 20rpx;
+  background: rgb(255, 255, 255);
+  margin: 20rpx 0;
+  width: 90%; /* 强制铺满父容器宽度 */
+  box-sizing: border-box; /* 避免padding撑宽导致溢出 */
+}
+
+.section-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 30rpx;
+}
+
+.section-title {
+  font-size: 36rpx;
+  font-weight: bold;
+  color: #333;
+}
+
+.section-more {
+  font-size: 26rpx;
+  color: #999;
+}
+
+.category-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 30rpx;
+}
+
+.category-item {
+  text-align: center;
+}
+
+.category-icon {
+  font-size: 60rpx;
+  margin-bottom: 16rpx;
+}
+
+.category-name {
+  display: block;
+  font-size: 24rpx;
+  color: #333;
+  margin-bottom: 8rpx;
+}
+
+.category-count {
+  font-size: 20rpx;
+  color: #999;
+}
+
+/* 故事列表 */
+.stories-section {
+  padding: 40rpx;
+}
+
+.section-tabs {
+  display: flex;
+  gap: 40rpx;
+}
+
+.tab-item {
+  font-size: 28rpx;
+  color: #999;
+  padding: 8rpx 0;
+  position: relative;
+}
+
+.tab-item.active {
+  color: #FF6B95;
+  font-weight: 500;
+}
+
+.tab-item.active::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 4rpx;
+  background: #FF6B95;
+  border-radius: 2rpx;
+}
+
+.stories-list {
+  margin-top: 30rpx;
+}
+
+.story-card {
+  background: white;
+  border-radius: 20rpx;
+  padding: 32rpx;
+  margin-bottom: 24rpx;
+  box-shadow: 0 4rpx 20rpx rgba(0,0,0,0.06);
+}
+
+.story-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 20rpx;
+}
+
+.story-title {
+  font-size: 34rpx;
+  font-weight: bold;
+  color: #333;
+  flex: 1;
+  margin-right: 20rpx;
+}
+
+.story-tag {
+  font-size: 22rpx;
+  padding: 8rpx 16rpx;
+  border-radius: 20rpx;
+  background: #FFF5F5;
+  color: #FF6B95;
+}
+
+.story-preview {
+  display: block;
+  font-size: 28rpx;
+  color: #666;
+  line-height: 1.6;
+  margin-bottom: 24rpx;
+}
+
+.story-stats {
+  display: flex;
+  gap: 30rpx;
+  margin-bottom: 24rpx;
+  padding-bottom: 24rpx;
+  border-bottom: 1rpx solid #f0f0f0;
+}
+
+.stat {
+  display: flex;
+  align-items: center;
+  gap: 8rpx;
+}
+
+.stat-icon {
+  font-size: 24rpx;
+}
+
+.stat-value {
+  font-size: 24rpx;
+  color: #666;
+}
+
+.story-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.author-info {
+  display: flex;
+  align-items: center;
+  gap: 16rpx;
+}
+
+.author-avatar {
+  width: 48rpx;
+  height: 48rpx;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #FF6B95, #FF8E6B);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-size: 20rpx;
+  font-weight: bold;
+}
+
+.author-name {
+  font-size: 24rpx;
+  color: #666;
+}
+
+.create-time {
+  font-size: 22rpx;
+  color: #999;
+}
+
+/* 加载更多 */
+.load-more {
+  text-align: center;
+  padding: 40rpx;
+}
+
+.load-text {
+  font-size: 28rpx;
+  color: #999;
+}

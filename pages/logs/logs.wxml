@@ -1,0 +1,23 @@
+<!--logs.wxml-->
+<view class="container">
+  <view class="section">
+    <view class="section-title">AI助手</view>
+    <view class="input-area">
+      <input class="ai-input" placeholder="请输入您的问题" value="{{userInput}}" bindinput="onInputChange" />
+      <button class="ai-button" bindtap="callAI" loading="{{isLoading}}">提问</button>
+    </view>
+    <view class="response-area" wx:if="{{aiResponse}}">
+      <view class="response-title">AI回复：</view>
+      <view class="response-content">{{aiResponse}}</view>
+    </view>
+  </view>
+  
+  <view class="section">
+    <view class="section-title">访问日志</view>
+    <scroll-view class="scrollarea" scroll-y type="list">
+      <block wx:for="{{logs}}" wx:key="timeStamp" wx:for-item="log">
+        <view class="log-item">{{index + 1}}. {{log.date}}</view>
+      </block>
+    </scroll-view>
+  </view>
+</view>

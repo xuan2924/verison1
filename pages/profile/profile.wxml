@@ -1,0 +1,117 @@
+<!--pages/profile/profile.wxml-->
+<view class="container">
+  <!-- 用户信息 -->
+  <view class="user-section">
+    <view class="user-header">
+      <view class="user-avatar">{{userInfo && userInfo.nickName ? userInfo.nickName.charAt(0) : '我'}}</view>
+      <view class="user-info">
+        <text class="user-name">{{userInfo && userInfo.nickName ? userInfo.nickName : '故事创作者'}}</text>
+        <text class="user-desc">热爱创作的故事达人</text>
+      </view>
+      <view class="user-settings" bindtap="editProfile">编辑资料</view>
+    </view>
+
+    <!-- 数据统计 -->
+    <view class="stats-cards">
+      <view class="stat-card">
+        <text class="stat-number">{{stats.created || 0}}</text>
+        <text class="stat-label">创作</text>
+      </view>
+      <view class="stat-card">
+        <text class="stat-number">{{stats.participating || 0}}</text>
+        <text class="stat-label">参与</text>
+      </view>
+      <view class="stat-card">
+        <text class="stat-number">{{stats.likes || 0}}</text>
+        <text class="stat-label">获赞</text>
+      </view>
+      <view class="stat-card">
+        <text class="stat-number">{{stats.followers || 0}}</text>
+        <text class="stat-label">粉丝</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- 功能菜单 -->
+  <view class="menu-section">
+    <view class="menu-group">
+      <view class="menu-title">我的创作</view>
+      <view class="menu-list">
+        <view class="menu-item" bindtap="navigateTo" data-url="/pages/index/index">
+          <view class="menu-left">
+            <text class="menu-icon">📖</text>
+            <text class="menu-text">我的故事</text>
+          </view>
+          <text class="menu-arrow">></text>
+        </view>
+        <view class="menu-item" bindtap="navigateTo" data-url="/pages/create/create">
+          <view class="menu-left">
+            <text class="menu-icon">✨</text>
+            <text class="menu-text">创建故事</text>
+          </view>
+          <text class="menu-arrow">></text>
+        </view>
+        <view class="menu-item" bindtap="viewDrafts">
+          <view class="menu-left">
+            <text class="menu-icon">📝</text>
+            <text class="menu-text">故事草稿</text>
+          </view>
+          <text class="menu-arrow">></text>
+        </view>
+      </view>
+    </view>
+
+    <view class="menu-group">
+      <view class="menu-title">内容收藏</view>
+      <view class="menu-list">
+        <view class="menu-item" bindtap="viewFavorites">
+          <view class="menu-left">
+            <text class="menu-icon">❤️</text>
+            <text class="menu-text">收藏的故事</text>
+          </view>
+          <text class="menu-arrow">></text>
+        </view>
+        <view class="menu-item" bindtap="viewHistory">
+          <view class="menu-left">
+            <text class="menu-icon">🕒</text>
+            <text class="menu-text">浏览历史</text>
+          </view>
+          <text class="menu-arrow">></text>
+        </view>
+      </view>
+    </view>
+
+    <view class="menu-group">
+      <view class="menu-title">设置</view>
+      <view class="menu-list">
+        <view class="menu-item" bindtap="showSettings">
+          <view class="menu-left">
+            <text class="menu-icon">⚙️</text>
+            <text class="menu-text">应用设置</text>
+          </view>
+          <text class="menu-arrow">></text>
+        </view>
+        <view class="menu-item" bindtap="showFeedback">
+          <view class="menu-left">
+            <text class="menu-icon">💬</text>
+            <text class="menu-text">意见反馈</text>
+          </view>
+          <text class="menu-arrow">></text>
+        </view>
+        <view class="menu-item" bindtap="showAbout">
+          <view class="menu-left">
+            <text class="menu-icon">ℹ️</text>
+            <text class="menu-text">关于我们</text>
+          </view>
+          <text class="menu-arrow">></text>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 底部操作 -->
+  <view class="action-section">
+    <button class="action-button" bindtap="clearCache">清理缓存</button>
+    <button class="action-button logout" bindtap="logout">退出登录</button>
+  </view>
+</view>

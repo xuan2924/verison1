@@ -1,0 +1,150 @@
+<!--pages/create/create.wxml-->
+<view class="container">
+  <!-- 顶部标题区 -->
+  <view class="header">
+    <view class="header-content">
+      <text class="title">创建新故事</text>
+      <text class="subtitle">设定规则，开启你们的奇幻之旅</text>
+    </view>
+    <view class="header-decoration"></view>
+  </view>
+
+  <!-- 主体表单区 -->
+  <view class="form-container">
+    
+    <!-- 故事标题卡片 -->
+    <view class="card">
+      <view class="form-label">
+        <view class="label-left">
+          <text class="label-text">故事标题</text>
+          <text class="label-required">*</text>
+        </view>
+        <text class="word-count {{title.length >= 20 ? 'limit' : ''}}">{{title.length}}/20</text>
+      </view>
+      <input 
+        class="form-input" 
+        placeholder="给你的故事起个吸引人的名字" 
+        placeholder-class="placeholder"
+        bindinput="onTitleInput"
+        value="{{title}}"
+        maxlength="20"
+      />
+    </view>
+
+    <!-- 故事主题卡片 -->
+    <view class="card">
+      <view class="form-label">
+        <text class="label-text">故事主题</text>
+      </view>
+      <view class="theme-grid">
+        <view 
+          class="theme-item {{selectedTheme === item ? 'active' : ''}}" 
+          wx:for="{{themes}}" 
+          wx:key="*this"
+          bindtap="selectTheme"
+          data-theme="{{item}}"
+        >
+          <text class="theme-icon">{{themeIcons[item]}}</text>
+          <text class="theme-name">{{item}}</text>
+          <view class="active-badge" wx:if="{{selectedTheme === item}}">
+            <icon type="success_no_circle" size="10" color="#fff"/>
+          </view>
+        </view>
+      </view>
+    </view>
+
+    <!-- 规则设置卡片 -->
+    <view class="card row-card">
+      <view class="settings-group">
+        <view class="form-item-inline">
+          <text class="label-text">参与人数</text>
+          <text class="value-highlight">{{participants}}人</text>
+        </view>
+        <slider 
+          class="custom-slider"
+          min="2" 
+          max="6" 
+          step="1" 
+          bindchange="onParticipantsChange"
+          value="{{participants}}"
+          activeColor="#FF6B95"
+          backgroundColor="#F0F0F0"
+          block-size="20"
+        />
+      </view>
+      
+      <view class="divider"></view>
+
+      <view class="settings-group">
+        <view class="form-item-inline">
+          <text class="label-text">每轮时间</text>
+          <picker 
+            range="{{timeLimits}}" 
+            value="{{timeLimitIndex}}"
+            bindchange="onTimeLimitChange"
+          >
+            <view class="picker-box">
+              <text class="picker-value">{{timeLimits[timeLimitIndex]}}</text>
+              <text class="picker-arrow">▼</text>
+            </view>
+          </picker>
+        </view>
+      </view>
+    </view>
+
+    <!-- 故事开头卡片 -->
+    <view class="card">
+      <view class="form-label">
+        <text class="label-text">故事开头</text>
+        <view class="ai-btn" bindtap="generateOpening">
+          <text class="ai-icon">✨</text>
+          <text>AI辅助生成</text>
+        </view>
+      </view>
+      <textarea 
+        class="form-textarea" 
+        placeholder="写一个精彩的开头，或者点击上方按钮让AI为你寻找灵感..."
+        placeholder-class="placeholder"
+        bindinput="onOpeningInput"
+        value="{{opening}}"
+        maxlength="200"
+        show-confirm-bar="{{false}}"
+      />
+      <view class="textarea-footer">
+        <text class="word-count">{{opening.length}}/200</text>
+      </view>
+    </view>
+
+    <!-- 快速模板区 -->
+    <view class="template-section">
+      <view class="section-header">
+        <text class="section-title">快速开头模板</text>
+      </view>
+      <scroll-view scroll-x class="template-list" enhanced show-scrollbar="{{false}}">
+        <view 
+          class="template-card" 
+          wx:for="{{openingTemplates}}" 
+          wx:key="*this"
+          bindtap="useTemplate"
+          data-template="{{item}}"
+        >
+          <text class="template-text">{{item}}</text>
+          <view class="template-mask">使用</view>
+        </view>
+      </scroll-view>
+    </view>
+  </view>
+
+  <!-- 底部操作栏 -->
+  <view class="footer-action">
+    <button 
+      class="create-btn {{canCreate ? 'btn-active' : ''}}" 
+      bindtap="createStory"
+      disabled="{{!canCreate || creating}}"
+      loading="{{creating}}"
+    >
+      {{creating ? '正在构建世界...' : '创建故事房间'}}
+    </button>
+    <text class="action-tip">开启后邀请好友加入，故事即刻开始</text>
+  </view>
+</view>

@@ -1,0 +1,126 @@
+<!--pages/discover/discover.wxml-->
+<view class="container">
+  <!-- 搜索栏 -->
+  <view class="search-section">
+    <view class="search-bar">
+      <view class="search-icon">🔍</view>
+      <input 
+        class="search-input" 
+        placeholder="搜索故事、主题或创作者"
+        placeholder-class="search-placeholder"
+      />
+      <view class="search-filter">筛选</view>
+    </view>
+  </view>
+
+  <!-- 轮播图 -->
+  <view class="banner-section">
+    <swiper 
+      class="banner-swiper" 
+      indicator-dots="{{true}}"
+      autoplay="{{true}}"
+      interval="{{3000}}"
+      duration="{{500}}"
+    >
+      <swiper-item wx:for="{{banners}}" wx:key="id">
+        <view class="banner-item">
+          <image class="banner-image" src="{{item.image}}"></image>
+          <view class="banner-content">
+            <text class="banner-title">{{item.title}}</text>
+            <text class="banner-desc">{{item.desc}}</text>
+          </view>
+        </view>
+      </swiper-item>
+    </swiper>
+  </view>
+
+  <!-- 热门分类 -->
+  <view class="category-section">
+    <view class="section-header">
+      <text class="section-title">热门分类</text>
+      <text class="section-more">全部</text>
+    </view>
+    <view class="category-grid">
+      <view 
+        class="category-item" 
+        wx:for="{{categories}}" 
+        wx:key="id"
+        bindtap="onCategoryTap"
+        data-category="{{item.name}}"
+      >
+        <view class="category-icon">{{item.icon}}</view>
+        <text class="category-name">{{item.name}}</text>
+        <text class="category-count">{{item.count}}篇</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- 推荐故事 -->
+  <view class="stories-section">
+    <view class="section-header">
+      <text class="section-title">推荐故事</text>
+      <view class="section-tabs">
+        <text 
+          class="tab-item {{currentTab === 'hot' ? 'active' : ''}}"
+          bindtap="switchTab"
+          data-tab="hot"
+        >热门</text>
+        <text 
+          class="tab-item {{currentTab === 'new' ? 'active' : ''}}"
+          bindtap="switchTab"
+          data-tab="new"
+        >最新</text>
+        <text 
+          class="tab-item {{currentTab === 'completed' ? 'active' : ''}}"
+          bindtap="switchTab"
+          data-tab="completed"
+        >已完结</text>
+      </view>
+    </view>
+
+    <view class="stories-list">
+      <view 
+        class="story-card" 
+        wx:for="{{recommendedStories}}" 
+        wx:key="id"
+        bindtap="viewStory"
+        data-story="{{item}}"
+      >
+        <view class="story-header">
+          <text class="story-title">{{item.title}}</text>
+          <view class="story-tag {{item.theme}}">{{item.theme}}</view>
+        </view>
+        
+        <text class="story-preview">{{item.preview}}...</text>
+        
+        <view class="story-stats">
+          <view class="stat">
+            <text class="stat-icon">👁️</text>
+            <text class="stat-value">{{item.views}}</text>
+          </view>
+          <view class="stat">
+            <text class="stat-icon">❤️</text>
+            <text class="stat-value">{{item.likes}}</text>
+          </view>
+          <view class="stat">
+            <text class="stat-icon">👥</text>
+            <text class="stat-value">{{item.participants}}</text>
+          </view>
+        </view>
+
+        <view class="story-footer">
+          <view class="author-info">
+            <view class="author-avatar">{{item.author.charAt(0)}}</view>
+            <text class="author-name">{{item.author}}</text>
+          </view>
+          <text class="create-time">{{item.createTime}}</text>
+        </view>
+      </view>
+    </view>
+
+    <!-- 加载更多 -->
+    <view class="load-more" bindtap="loadMoreStories">
+      <text class="load-text">{{loading ? '加载中...' : '加载更多'}}</text>
+    </view>
+  </view>
+</view>

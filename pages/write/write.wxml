@@ -1,0 +1,196 @@
+<!--pages/write/write.wxml-->
+<view class="container">
+  <!-- 顶部导航 -->
+  <view class="write-header">
+    <view class="header-left">
+      <view class="back-button" bindtap="goBack">←</view>
+      <text class="header-title">续写故事</text>
+    </view>
+    <view class="header-right">
+      <text class="word-count">{{content.length}}/500</text>
+    </view>
+  </view>
+
+  <!-- 故事上下文 -->
+  <view class="context-section">
+    <view class="section-header">
+      <text class="section-title">故事当前内容</text>
+      <text class="section-tip">参考前文保持连贯</text>
+    </view>
+    
+    <scroll-view scroll-y class="context-scroll" scroll-into-view="{{'turn-' + (previousTurns.length - 1)}}">
+      <view class="context-list">
+        <view 
+          class="context-item" 
+          wx:for="{{previousTurns}}" 
+          wx:key="index"
+          id="turn-{{index}}"
+        >
+          <view class="context-header">
+            <text class="context-author">{{item.user}}</text>
+            <text class="context-time">{{formatTime(item.timestamp)}}</text>
+          </view>
+          <text class="context-content">{{item.content}}</text>
+        </view>
+        
+        <!-- 当前写作提示 -->
+        <view class="writing-prompt">
+          <text class="prompt-icon">✍️</text>
+          <text class="prompt-text">轮到你了！请继续创作...</text>
+        </view>
+      </view>
+    </scroll-view>
+  </view>
+
+  <!-- 写作区域 -->
+  <view class="writing-section">
+    <view class="section-header">
+      <text class="section-title">我的续写</text>
+      <text class="section-tip">建议100-300字</text>
+    </view>
+    
+    <textarea 
+      class="writing-textarea" 
+      placeholder="在这里写下你的创意续写，推动故事发展..."
+      placeholder-class="textarea-placeholder"
+      bindinput="onContentInput"
+      bindfocus="onTextareaFocus"
+      bindblur="onTextareaBlur"
+      value="{{content}}"
+      maxlength="500"
+      show-confirm-bar="{{false}}"
+      auto-height
+    />
+    
+    <!-- 写作辅助 -->
+    <view class="writing-assist">
+      <view class="assist-item" bindtap="clearContent">
+        <text class="assist-icon">🗑️</text>
+        <text class="assist-text">清空</text>
+      </view>
+      
+      <view class="assist-item" bindtap="toggleAIEnhanced">
+        <text class="assist-icon">{{useAIEnhanced ? '✅' : '⚪'}}</text>
+        <text class="assist-text">AI润色</text>
+      </view>
+      
+      <view class="assist-item" bindtap="getAISuggestions">
+        <text class="assist-icon">💡</text>
+        <text class="assist-text">{{gettingSuggestions ? '思考中...' : 'AI建议'}}</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- AI建议区域 -->
+  <view class="suggestions-section" wx:if="{{suggestions.length > 0}}">
+    <view class="section-header">
+      <text class="section-title">AI创作建议</text>
+      <text class="section-tip">点击使用建议</text>
+    </view>
+    
+    <view class="suggestions-grid">
+      <view 
+        class="suggestion-card" 
+        wx:for="{{suggestions}}" 
+        wx:key="index"
+        bindtap="useSuggestion"
+        data-index="{{index}}"
+      >
+        <view class="suggestion-header">
+          <text class="suggestion-number">#{{index + 1}}</text>
+          <text class="suggestion-use" wx:if="{{!usedSuggestions[index]}}">点击使用</text>
+          <text class="suggestion-used" wx:else>已使用</text>
+        </view>
+        <text class="suggestion-content">{{item}}</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- 写作统计 -->
+  <view class="stats-section">
+    <view class="stats-grid">
+      <view class="stat-item">
+        <text class="stat-value">{{content.length}}</text>
+        <text class="stat-label">字数</text>
+      </view>
+      <view class="stat-item">
+        <text class="stat-value">{{estimateReadingTime}}s</text>
+        <text class="stat-label">阅读时间</text>
+      </view>
+      <view class="stat-item">
+        <text class="stat-value">{{getParagraphCount()}}</text>
+        <text class="stat-label">段落</text>
+      </view>
+      <view class="stat-item">
+        <text class="stat-value {{content.length >= 100 ? 'good' : 'warn'}}">
+          {{content.length >= 100 ? '👍' : '⚠️'}}
+        </text>
+        <text class="stat-label">建议</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- 底部操作栏 -->
+  <view class="action-bar">
+    <button 
+      class="action-button preview" 
+      bindtap="previewStory"
+      disabled="{{!content.trim()}}"
+    >
+      <text class="button-icon">👁️</text>
+      <text class="button-text">预览</text>
+    </button>
+    
+    <button 
+      class="action-button submit {{canSubmit ? 'active' : ''}}" 
+      bindtap="submitStory"
+      disabled="{{!canSubmit || submitting}}"
+    >
+      <view class="button-content">
+        <text class="button-icon">{{submitting ? '⏳' : '🚀'}}</text>
+        <text class="button-text">
+          {{submitting ? '提交中...' : '提交续写'}}
+        </text>
+      </view>
+      <text class="submit-tip" wx:if="{{useAIEnhanced}}">(AI润色)</text>
+    </button>
+  </view>
+
+  <!-- 预览模态框 -->
+  <view class="modal {{showPreviewModal ? 'show' : ''}}">
+    <view class="modal-content preview-modal">
+      <view class="modal-header">
+        <text class="modal-title">预览我的续写</text>
+        <view class="modal-close" bindtap="hidePreviewModal">×</view>
+      </view>
+      
+      <scroll-view scroll-y class="preview-scroll">
+        <view class="preview-content">
+          <!-- 原有故事 -->
+          <view class="preview-original">
+            <text class="preview-section-title">原有故事</text>
+            <view class="original-content">
+              <text wx:for="{{previousTurns}}" wx:key="index">
+                {{item.user}}：{{item.content}}\n\n
+              </text>
+            </view>
+          </view>
+          
+          <!-- 我的续写 -->
+          <view class="preview-new">
+            <text class="preview-section-title">我的续写</text>
+            <view class="new-content">
+              <text class="author-tag">{{userInfo.nickName}}：</text>
+              <text class="new-text">{{previewContent}}</text>
+            </view>
+          </view>
+        </view>
+      </scroll-view>
+      
+      <view class="preview-actions">
+        <button class="preview-button secondary" bindtap="hidePreviewModal">继续修改</button>
+        <button class="preview-button primary" bindtap="confirmSubmit">确认提交</button>
+      </view>
+    </view>
+  </view>
+</view>

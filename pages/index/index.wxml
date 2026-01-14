@@ -1,0 +1,101 @@
+<view class="container">
+  <!-- 顶部横幅 -->
+  <view class="hero-section">
+    <text class="hero-title">故事叠叠乐</text>
+    <text class="hero-subtitle">与好友共创奇妙故事</text>
+  </view>
+
+  <!-- 快速操作 -->
+  <view class="quick-actions">
+    <view class="action-card create" bindtap="createStory">
+      <view class="action-icon">✨</view>
+      <text class="action-text">创建新故事</text>
+      <text class="action-desc">开启新的创作旅程</text>
+    </view>
+    
+    <view class="action-card join" bindtap="joinStory">
+      <view class="action-icon">🔍</view>
+      <text class="action-text">加入故事</text>
+      <text class="action-desc">输入ID参与创作</text>
+    </view>
+  </view>
+
+  <!-- 故事分类 -->
+  <view class="category-section">
+    <text class="section-title">故事分类</text>
+    <scroll-view scroll-x class="category-list">
+      <view 
+        class="category-item {{currentCategory === 'all' ? 'active' : ''}}" 
+        bindtap="switchCategory" 
+        data-category="all"
+      >
+        全部
+      </view>
+      <view 
+        class="category-item {{currentCategory === 'ongoing' ? 'active' : ''}}" 
+        bindtap="switchCategory" 
+        data-category="ongoing"
+      >
+        进行中
+      </view>
+      <view 
+        class="category-item {{currentCategory === 'completed' ? 'active' : ''}}" 
+        bindtap="switchCategory" 
+        data-category="completed"
+      >
+        已完成
+      </view>
+    </scroll-view>
+  </view>
+
+  <!-- 故事列表 -->
+  <view class="stories-section">
+    <view class="section-header">
+      <text class="section-title">我的故事</text>
+      <text class="section-count">共{{filteredStories.length}}个</text>
+    </view>
+    
+    <view class="stories-list">
+      <view 
+        class="story-card" 
+        wx:for="{{filteredStories}}" 
+        wx:key="id"
+        bindtap="enterStory" 
+        data-id="{{item.id}}"
+      >
+        <view class="story-header">
+          <text class="story-title">{{item.title}}</text>
+          <view class="story-status {{item.status}}">
+            {{item.status === 'waiting' ? '等待中' : item.status === 'playing' ? '进行中' : '已完成'}}
+          </view>
+        </view>
+        
+        <text class="story-theme">{{item.theme}}</text>
+        
+        <view class="story-progress">
+          <view class="progress-bar">
+            <view class="progress-fill" style="width: {{item.progress}}"></view>
+          </view>
+          <text class="progress-text">{{item.progress}}%</text>
+        </view>
+        
+        <view class="story-footer">
+          <view class="participants">
+            <text class="participant-count">👥 {{item.participants.length}}/{{item.maxParticipants}}</text>
+            <text class="current-writer" wx:if="{{item.status === 'playing'}}">
+              轮到: {{item.currentWriter}}
+            </text>
+          </view>
+          <text class="create-time">{{item.createTime}}</text>
+        </view>
+      </view>
+    </view>
+
+    <!-- 空状态 -->
+    <view class="empty-state" wx:if="{{filteredStories.length === 0}}">
+      <image src="/images/empty-stories.png" class="empty-image"></image>
+      <text class="empty-text">还没有故事哦</text>
+      <text class="empty-desc">创建第一个故事，邀请好友一起玩吧</text>
+    </view>
+  </view>
+</view>
