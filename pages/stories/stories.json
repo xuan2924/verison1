@@ -1,0 +1,7 @@
+{
+  "navigationBarTitleText": "我的故事",
+  "navigationBarBackgroundColor": "#FFD6E7",
+  "navigationBarTextStyle": "black",
+  "enablePullDownRefresh": true,
+  "usingComponents": {}
+}

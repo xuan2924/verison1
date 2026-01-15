@@ -1,0 +1,102 @@
+<!--pages/invite/invite.wxml-->
+<view class="container">
+  <view class="header">
+    <image class="logo" src="/images/logo.png" mode="aspectFit"></image>
+    <text class="title">故事叠叠乐</text>
+    <text class="subtitle">输入邀请码加入精彩故事</text>
+  </view>
+
+  <!-- 当前故事信息 -->
+  <view class="current-story" wx:if="{{story}}">
+    <view class="story-card">
+      <text class="story-title">{{story.title}}</text>
+      <view class="story-meta">
+        <text class="story-theme">{{story.theme}}</text>
+        <text class="story-status">{{statusText[story.status]}}</text>
+      </view>
+      <view class="story-info">
+        <text class="info-item">参与者: {{story.participants.length}}/{{story.maxParticipants}}</text>
+        <text class="info-item">进度: {{story.turns.length}}/5 轮</text>
+      </view>
+      <button class="generate-btn" bindtap="generateInviteCode" disabled="{{generatingCode}}" loading="{{generatingCode}}">
+        生成邀请码
+      </button>
+      <view class="invite-code-result" wx:if="{{inviteCode}}">
+        <text class="code-label">邀请码</text>
+        <view class="code-display">
+          <text class="code-text">{{inviteCode}}</text>
+          <text class="code-copy" bindtap="copyInviteCode">复制</text>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <view class="divider" wx:if="{{story}}">或</view>
+
+  <view class="input-section">
+    <view class="input-group">
+      <input
+        class="code-input"
+        type="text"
+        placeholder="请输入6位邀请码"
+        maxlength="6"
+        value="{{inviteCode}}"
+        bindinput="onCodeInput"
+      />
+      <button class="scan-btn" bindtap="scanQRCode">
+        <text class="scan-icon">📷</text>
+      </button>
+    </view>
+
+    <button
+      class="verify-btn"
+      bindtap="verifyInviteCode"
+      disabled="{{loading}}"
+      loading="{{loading}}"
+    >
+      验证邀请码
+    </button>
+  </view>
+
+  <!-- 故事预览弹窗 -->
+  <view class="modal {{showStoryPreview ? 'show' : ''}}" catchtap="closePreview">
+    <view class="modal-content" catchtap="stopPropagation">
+      <view class="modal-header">
+        <text class="modal-title">发现新故事</text>
+        <view class="modal-close" bindtap="closePreview">×</view>
+      </view>
+
+      <view class="story-preview" wx:if="{{story}}">
+        <view class="story-header">
+          <text class="story-title">{{story.title}}</text>
+          <view class="story-meta">
+            <text class="story-theme">{{story.theme}}</text>
+            <text class="story-status">{{statusText[story.status]}}</text>
+          </view>
+        </view>
+
+        <view class="story-info">
+          <view class="info-item">
+            <text class="info-label">参与者</text>
+            <text class="info-value">{{story.participants.length}}/{{story.maxParticipants}}</text>
+          </view>
+          <view class="info-item">
+            <text class="info-label">进度</text>
+            <text class="info-value">{{story.turns.length}}/5 轮</text>
+          </view>
+          <view class="info-item">
+            <text class="info-label">创建者</text>
+            <text class="info-value">{{story.creator.nickName}}</text>
+          </view>
+        </view>
+
+        <view class="story-opening" wx:if="{{story.opening}}">
+          <text class="opening-label">故事开头</text>
+          <text class="opening-content">{{story.opening}}</text>
+        </view>
+      </view>
+
+      <button class="join-btn" bindtap="joinStory">加入故事</button>
+    </view>
+  </view>
+</view>

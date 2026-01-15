@@ -137,6 +137,11 @@
         <text class="button-icon">👥</text>
         <text class="button-text">邀请</text>
       </button>
+
+      <button class="action-button secondary" bindtap="saveStoryToCloud">
+        <text class="button-icon">☁️</text>
+        <text class="button-text">保存</text>
+      </button>
       
       <button class="action-button secondary" bindtap="viewStoryRules">
         <text class="button-icon">📖</text>

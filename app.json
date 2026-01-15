@@ -5,7 +5,9 @@
     "pages/create/create",
     "pages/room/room",
     "pages/write/write",
-    "pages/profile/profile"
+    "pages/profile/profile",
+    "pages/invite/invite",
+    "pages/stories/stories"
   ],
   "window": {
     "backgroundTextStyle": "light",

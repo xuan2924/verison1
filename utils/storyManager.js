@@ -236,6 +236,45 @@ class StoryManager {
       }, 1000)
     })
   }
+
+  // 获取所有故事
+  getAllStories() {
+    return this.stories
+  }
+
+  // 保存单个故事
+  saveStory(story) {
+    if (!story || !story.id) return false
+    
+    // 查找是否已存在
+    const index = this.stories.findIndex(s => s.id === story.id)
+    
+    if (index > -1) {
+      // 更新已存在的故事
+      this.stories[index] = story
+    } else {
+      // 添加新故事
+      this.stories.unshift(story)
+    }
+    
+    this.saveStories()
+    return true
+  }
+
+  // 删除故事
+  deleteStory(storyId) {
+    if (!storyId) return false
+    
+    const index = this.stories.findIndex(s => s.id === storyId)
+    
+    if (index > -1) {
+      this.stories.splice(index, 1)
+      this.saveStories()
+      return true
+    }
+    
+    return false
+  }
 }
 
 // 创建单例

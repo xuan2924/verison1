@@ -1,0 +1,209 @@
+/* pages/stories/stories.wxss */
+.container {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  background: #F8F9FA;
+}
+
+/* 标签栏 */
+.tab-bar {
+  display: flex;
+  background: white;
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  box-shadow: 0 2rpx 10rpx rgba(0, 0, 0, 0.05);
+}
+
+.tab-item {
+  flex: 1;
+  text-align: center;
+  padding: 30rpx 0;
+  position: relative;
+  transition: all 0.3s ease;
+}
+
+.tab-item.active {
+  color: #FF6B95;
+}
+
+.tab-item.active::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 30%;
+  width: 40%;
+  height: 4rpx;
+  background: #FF6B95;
+  border-radius: 4rpx;
+}
+
+.tab-text {
+  font-size: 32rpx;
+  font-weight: 500;
+}
+
+/* 故事列表 */
+.stories-container {
+  padding: 20rpx;
+  flex: 1;
+}
+
+.story-card {
+  background: white;
+  border-radius: 20rpx;
+  margin-bottom: 20rpx;
+  overflow: hidden;
+  box-shadow: 0 4rpx 20rpx rgba(0, 0, 0, 0.05);
+  transition: all 0.3s ease;
+}
+
+.story-card:active {
+  transform: scale(0.98);
+}
+
+.story-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 30rpx;
+}
+
+.story-info {
+  flex: 1;
+}
+
+.story-title {
+  display: block;
+  font-size: 36rpx;
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 15rpx;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.story-meta {
+  display: flex;
+  gap: 15rpx;
+  margin-bottom: 15rpx;
+}
+
+.story-theme {
+  font-size: 24rpx;
+  color: #FF6B95;
+  background: rgba(255, 107, 149, 0.1);
+  padding: 6rpx 12rpx;
+  border-radius: 12rpx;
+}
+
+.story-status {
+  font-size: 24rpx;
+  color: #666;
+  background: rgba(0, 0, 0, 0.05);
+  padding: 6rpx 12rpx;
+  border-radius: 12rpx;
+}
+
+.story-stats {
+  display: flex;
+  gap: 20rpx;
+}
+
+.stat-item {
+  font-size: 26rpx;
+  color: #999;
+}
+
+.story-arrow {
+  font-size: 36rpx;
+  color: #CCC;
+  margin-left: 20rpx;
+}
+
+.story-actions {
+  display: flex;
+  padding: 0 30rpx 30rpx;
+  gap: 20rpx;
+}
+
+.action-btn {
+  flex: 1;
+  height: 70rpx;
+  border-radius: 35rpx;
+  font-size: 28rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.action-btn.save {
+  background: rgba(255, 107, 149, 0.1);
+  color: #FF6B95;
+}
+
+.action-btn.delete {
+  background: rgba(255, 71, 87, 0.1);
+  color: #FF4757;
+}
+
+/* 空状态 */
+.empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 100rpx 0;
+  flex: 1;
+}
+
+.empty-icon {
+  width: 160rpx;
+  height: 160rpx;
+  margin-bottom: 40rpx;
+  opacity: 0.5;
+}
+
+.empty-text {
+  font-size: 32rpx;
+  color: #999;
+  margin-bottom: 15rpx;
+}
+
+.empty-desc {
+  font-size: 26rpx;
+  color: #CCC;
+  text-align: center;
+  max-width: 500rpx;
+}
+
+/* 加载状态 */
+.loading-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 40rpx 0;
+}
+
+.loading-spinner {
+  width: 60rpx;
+  height: 60rpx;
+  border: 6rpx solid rgba(255, 107, 149, 0.2);
+  border-top: 6rpx solid #FF6B95;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+  margin-bottom: 20rpx;
+}
+
+.loading-text {
+  font-size: 28rpx;
+  color: #999;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}

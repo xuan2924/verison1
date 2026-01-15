@@ -37,9 +37,9 @@
     <view class="menu-group">
       <view class="menu-title">我的创作</view>
       <view class="menu-list">
-        <view class="menu-item" bindtap="navigateTo" data-url="/pages/index/index">
+        <view class="menu-item" bindtap="navigateTo" data-url="/pages/stories/stories">
           <view class="menu-left">
-            <text class="menu-icon">📖</text>
+            <text class="menu-icon">📚</text>
             <text class="menu-text">我的故事</text>
           </view>
           <text class="menu-arrow">></text>

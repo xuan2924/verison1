@@ -1,0 +1,102 @@
+<!--pages/stories/stories.wxml-->
+<view class="container">
+  <!-- 标签栏 -->
+  <view class="tab-bar">
+    <view 
+      class="tab-item {{activeTab === 'local' ? 'active' : ''}}" 
+      bindtap="switchTab" 
+      data-tab="local"
+    >
+      <text class="tab-text">本地故事</text>
+    </view>
+    <view 
+      class="tab-item {{activeTab === 'cloud' ? 'active' : ''}}" 
+      bindtap="switchTab" 
+      data-tab="cloud"
+    >
+      <text class="tab-text">云端故事</text>
+    </view>
+  </view>
+
+  <!-- 故事列表 -->
+  <view class="stories-container">
+    <block wx:if="{{stories.length > 0}}">
+      <view 
+        class="story-card" 
+        wx:for="{{stories}}" 
+        wx:key="id"
+      >
+        <view class="story-header" bindtap="openStory" data-story="{{item}}">
+          <view class="story-info">
+            <text class="story-title">{{item.title}}</text>
+            <view class="story-meta">
+              <text class="story-theme">{{item.theme}}</text>
+              <text class="story-status">{{statusText[item.status] || item.status}}</text>
+            </view>
+            <view class="story-stats">
+              <text class="stat-item">{{item.participants.length}}人参与</text>
+              <text class="stat-item">{{item.turns.length}}段内容</text>
+            </view>
+          </view>
+          <view class="story-arrow">></view>
+        </view>
+
+        <view class="story-actions">
+          <block wx:if="{{activeTab === 'local'}}">
+            <button 
+              class="action-btn save" 
+              bindtap="saveToCloud" 
+              data-story="{{item}}"
+            >
+              保存到云端
+            </button>
+            <button 
+              class="action-btn delete" 
+              bindtap="deleteLocalStory" 
+              data-story="{{item}}"
+              data-index="{{index}}"
+            >
+              删除
+            </button>
+          </block>
+
+          <block wx:if="{{activeTab === 'cloud'}}">
+            <button 
+              class="action-btn save" 
+              bindtap="downloadToLocal" 
+              data-story="{{item}}"
+            >
+              下载到本地
+            </button>
+            <button 
+              class="action-btn delete" 
+              bindtap="deleteCloudStory" 
+              data-story="{{item}}"
+              data-index="{{index}}"
+            >
+              删除
+            </button>
+          </block>
+        </view>
+      </view>
+    </block>
+
+    <!-- 空状态 -->
+    <view class="empty-state" wx:else>
+      <image class="empty-icon" src="/images/empty-stories.png"></image>
+      <text class="empty-text">{{emptyText[activeTab]}}</text>
+      <text class="empty-desc" wx:if="{{activeTab === 'local'}}">
+        创建的故事会自动保存在本地
+      </text>
+      <text class="empty-desc" wx:if="{{activeTab === 'cloud'}}">
+        可以将本地故事保存到云端，多设备同步
+      </text>
+    </view>
+  </view>
+
+  <!-- 加载状态 -->
+  <view class="loading-container" wx:if="{{loading}}">
+    <view class="loading-spinner"></view>
+    <text class="loading-text">加载中...</text>
+  </view>
+</view>

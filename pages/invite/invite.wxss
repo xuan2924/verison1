@@ -1,0 +1,387 @@
+/* pages/invite/invite.wxss */
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  min-height: 100vh;
+  padding: 60rpx 40rpx;
+  background: linear-gradient(135deg, #FFF5F5 0%, #F0F8FF 100%);
+}
+
+.header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 80rpx;
+}
+
+.logo {
+  width: 160rpx;
+  height: 160rpx;
+  margin-bottom: 30rpx;
+}
+
+.title {
+  font-size: 48rpx;
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 15rpx;
+}
+
+.subtitle {
+  font-size: 28rpx;
+  color: #666;
+}
+
+.input-section {
+  width: 100%;
+  max-width: 600rpx;
+}
+
+.input-group {
+  display: flex;
+  align-items: center;
+  background: white;
+  border-radius: 20rpx;
+  padding: 10rpx;
+  margin-bottom: 40rpx;
+  box-shadow: 0 8rpx 30rpx rgba(0, 0, 0, 0.1);
+}
+
+.code-input {
+  flex: 1;
+  height: 100rpx;
+  font-size: 36rpx;
+  text-align: center;
+  letter-spacing: 8rpx;
+  font-weight: bold;
+}
+
+.scan-btn {
+  width: 80rpx;
+  height: 80rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #FF6B95;
+  border-radius: 16rpx;
+  margin-left: 10rpx;
+}
+
+.scan-icon {
+  font-size: 40rpx;
+  color: white;
+}
+
+.verify-btn {
+  width: 100%;
+  height: 100rpx;
+  background: linear-gradient(135deg, #FF6B95, #FF8E6B);
+  border-radius: 50rpx;
+  color: white;
+  font-size: 32rpx;
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 8rpx 30rpx rgba(255, 107, 149, 0.3);
+}
+
+.verify-btn[disabled] {
+  background: #CCCCCC;
+  box-shadow: none;
+}
+
+/* 当前故事信息 */
+.current-story {
+  width: 100%;
+  max-width: 600rpx;
+  margin-bottom: 40rpx;
+}
+
+.story-card {
+  background: white;
+  border-radius: 20rpx;
+  padding: 30rpx;
+  box-shadow: 0 8rpx 30rpx rgba(0, 0, 0, 0.1);
+}
+
+.story-title {
+  display: block;
+  font-size: 36rpx;
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 15rpx;
+}
+
+.story-meta {
+  display: flex;
+  gap: 15rpx;
+  margin-bottom: 20rpx;
+}
+
+.story-theme {
+  font-size: 24rpx;
+  color: #FF6B95;
+  background: rgba(255, 107, 149, 0.1);
+  padding: 6rpx 12rpx;
+  border-radius: 12rpx;
+}
+
+.story-status {
+  font-size: 24rpx;
+  color: #666;
+  background: rgba(0, 0, 0, 0.05);
+  padding: 6rpx 12rpx;
+  border-radius: 12rpx;
+}
+
+.story-info {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 30rpx;
+}
+
+.info-item {
+  font-size: 28rpx;
+  color: #666;
+}
+
+.generate-btn {
+  width: 100%;
+  height: 90rpx;
+  background: linear-gradient(135deg, #FF6B95, #FF8E6B);
+  border-radius: 45rpx;
+  color: white;
+  font-size: 32rpx;
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 30rpx;
+  box-shadow: 0 8rpx 30rpx rgba(255, 107, 149, 0.3);
+}
+
+.generate-btn[disabled] {
+  background: #CCCCCC;
+  box-shadow: none;
+}
+
+.invite-code-result {
+  background: #F8F9FA;
+  border-radius: 16rpx;
+  padding: 20rpx;
+}
+
+.code-label {
+  display: block;
+  font-size: 28rpx;
+  color: #666;
+  margin-bottom: 10rpx;
+}
+
+.code-display {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.code-text {
+  font-size: 36rpx;
+  font-weight: bold;
+  color: #333;
+  letter-spacing: 4rpx;
+}
+
+.code-copy {
+  font-size: 28rpx;
+  color: #FF6B95;
+  padding: 10rpx 20rpx;
+  background: rgba(255, 107, 149, 0.1);
+  border-radius: 30rpx;
+}
+
+.divider {
+  font-size: 32rpx;
+  color: #999;
+  margin: 30rpx 0;
+  text-align: center;
+  position: relative;
+}
+
+.divider::before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 0;
+  right: 0;
+  height: 1rpx;
+  background: #EEEEEE;
+  z-index: 1;
+}
+
+.divider text {
+  background: #FFF5F5;
+  padding: 0 20rpx;
+  position: relative;
+  z-index: 2;
+}
+
+/* 弹窗样式 */
+.modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  opacity: 0;
+  visibility: hidden;
+  transition: all 0.3s ease;
+}
+
+.modal.show {
+  opacity: 1;
+  visibility: visible;
+}
+
+.modal-content {
+  width: 80%;
+  max-width: 600rpx;
+  background: white;
+  border-radius: 30rpx;
+  overflow: hidden;
+  transform: scale(0.8);
+  transition: transform 0.3s ease;
+}
+
+.modal.show .modal-content {
+  transform: scale(1);
+}
+
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 30rpx;
+  border-bottom: 1rpx solid #EEEEEE;
+}
+
+.modal-title {
+  font-size: 36rpx;
+  font-weight: bold;
+  color: #333;
+}
+
+.modal-close {
+  width: 60rpx;
+  height: 60rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 40rpx;
+  color: #999;
+}
+
+.story-preview {
+  padding: 30rpx;
+}
+
+.story-header {
+  margin-bottom: 30rpx;
+}
+
+.story-title {
+  display: block;
+  font-size: 36rpx;
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 15rpx;
+}
+
+.story-meta {
+  display: flex;
+  gap: 15rpx;
+}
+
+.story-theme {
+  font-size: 24rpx;
+  color: #FF6B95;
+  background: rgba(255, 107, 149, 0.1);
+  padding: 6rpx 12rpx;
+  border-radius: 12rpx;
+}
+
+.story-status {
+  font-size: 24rpx;
+  color: #666;
+  background: rgba(0, 0, 0, 0.05);
+  padding: 6rpx 12rpx;
+  border-radius: 12rpx;
+}
+
+.story-info {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 30rpx;
+  background: #F8F9FA;
+  padding: 20rpx;
+  border-radius: 16rpx;
+}
+
+.info-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.info-label {
+  font-size: 24rpx;
+  color: #999;
+  margin-bottom: 8rpx;
+}
+
+.info-value {
+  font-size: 28rpx;
+  font-weight: bold;
+  color: #333;
+}
+
+.story-opening {
+  margin-bottom: 30rpx;
+}
+
+.opening-label {
+  display: block;
+  font-size: 28rpx;
+  color: #666;
+  margin-bottom: 10rpx;
+}
+
+.opening-content {
+  font-size: 30rpx;
+  color: #333;
+  line-height: 1.6;
+  background: #F8F9FA;
+  padding: 20rpx;
+  border-radius: 16rpx;
+  border-left: 4rpx solid #FF6B95;
+}
+
+.join-btn {
+  width: 100%;
+  height: 90rpx;
+  background: linear-gradient(135deg, #FF6B95, #FF8E6B);
+  color: white;
+  font-size: 32rpx;
+  font-weight: bold;
+  border-radius: 0 0 30rpx 30rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}

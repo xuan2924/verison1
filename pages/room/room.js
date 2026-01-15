@@ -122,7 +122,92 @@ Page({
 
   // 邀请好友
   inviteFriend() {
-    this.setData({ showInviteModal: true })
+    wx.showActionSheet({
+      itemList: ['生成邀请二维码', '分享给微信好友'],
+      success: (res) => {
+        if (res.tapIndex === 0) {
+          this.generateQRCode()
+        } else if (res.tapIndex === 1) {
+          this.shareToWeChat()
+        }
+      }
+    })
+  },
+
+  // 生成邀请二维码
+  async generateQRCode() {
+    wx.showLoading({ title: '生成中...' })
+    
+    try {
+      // 调用云函数生成二维码
+      const res = await wx.cloud.callFunction({
+        name: 'qrcode',
+        data: {
+          path: `/pages/invite/invite?code=${this.data.inviteCode || this.data.story.id}`
+        }
+      })
+      
+      if (res.result.success) {
+        // 将二维码保存为临时文件
+        const fs = wx.getFileSystemManager()
+        const filePath = `${wx.env.USER_DATA_PATH}/invite_qrcode.png`
+        
+        fs.writeFileSync(filePath, res.result.buffer, 'binary')
+        
+        // 预览二维码
+        wx.previewImage({
+          urls: [filePath],
+          current: filePath
+        })
+        
+        // 保存到相册
+        wx.showModal({
+          title: '保存二维码',
+          content: '是否保存邀请二维码到相册？',
+          success: (modalRes) => {
+            if (modalRes.confirm) {
+              wx.saveImageToPhotosAlbum({
+                filePath: filePath,
+                success: () => {
+                  wx.showToast({
+                    title: '已保存到相册',
+                    icon: 'success'
+                  })
+                },
+                fail: () => {
+                  wx.showToast({
+                    title: '保存失败，请检查相册权限',
+                    icon: 'none'
+                  })
+                }
+              })
+            }
+          }
+        })
+      } else {
+        wx.showToast({
+          title: '生成失败',
+          icon: 'none'
+        })
+      }
+    } catch (error) {
+      console.error('生成二维码失败:', error)
+      wx.showToast({
+        title: '生成失败，请重试',
+        icon: 'none'
+      })
+    } finally {
+      wx.hideLoading()
+    }
+  },
+
+  // 分享给微信好友
+  shareToWeChat() {
+    // 触发分享
+    wx.showShareMenu({
+      withShareTicket: true,
+      menus: ['shareAppMessage', 'shareTimeline']
+    })
   },
 
   // 隐藏邀请弹窗
@@ -241,8 +326,55 @@ Page({
   onShareAppMessage() {
     return {
       title: `快来加入我的故事《${this.data.story.title}》`,
-      path: `/pages/room/room?storyId=${this.data.storyId}`,
+      path: `/pages/invite/invite?code=${this.data.inviteCode || this.data.story.id}`,
       imageUrl: '/images/share-cover.jpg'
+    }
+  },
+
+  // 分享到朋友圈
+  onShareTimeline() {
+    return {
+      title: `我在创作一个有趣的故事《${this.data.story.title}》，快来一起玩！`,
+      query: `code=${this.data.inviteCode || this.data.story.id}`,
+      imageUrl: '/images/share-cover.jpg'
+    }
+  },
+
+  // 保存故事到云端
+  async saveStoryToCloud() {
+    if (!this.data.story) return
+    
+    wx.showLoading({ title: '保存中...' })
+    
+    try {
+      const res = await wx.cloud.callFunction({
+        name: 'saveStory',
+        data: {
+          action: 'saveToCloud',
+          storyId: this.data.story.id,
+          storyData: this.data.story
+        }
+      })
+      
+      if (res.result.success) {
+        wx.showToast({
+          title: '已保存到云端',
+          icon: 'success'
+        })
+      } else {
+        wx.showToast({
+          title: res.result.error || '保存失败',
+          icon: 'none'
+        })
+      }
+    } catch (error) {
+      console.error('保存到云端失败:', error)
+      wx.showToast({
+        title: '保存失败，请重试',
+        icon: 'none'
+      })
+    } finally {
+      wx.hideLoading()
     }
   }
 })
